@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Step16_canvas2.html</title>
+    <title>Step16_canvas3.html</title>
     <style>
         canvas{
             border: 1px dotted gray;
@@ -13,18 +13,29 @@
 </head>
 <body>
     <h1>canvas 요소 사용해 보기</h1>
-    <canvas id="myCanvas" width="500" height="500"></canvas>
+    <canvas id="myCanvas" width="800" height="500"></canvas>
     <script>
         //canvas 요소의 참조값
         let canvas=document.querySelector("#myCanvas");
         //canvas 에 그림을 그릴수 있는 도구의 참조값 얻어오기 
         let context=canvas.getContext("2d");
+        let rabbitIdx=0;
 
         //canvas 에 그릴 이미지 로딩하기
         let snipeImg=new Image();
-        snipeImg.src="../images/snipe.png";
         let holeImg=new Image();
+        let backImg=new Image();
+        let bloodImg=new Image();
+        let rabbitImg1=new Image();
+        let rabbitImg2=new Image();
+        
+
+        snipeImg.src="../images/snipe.png"; //이미지를 로딩할때 .src를 사용해서 집어넣어야 함을 유의하자!
         holeImg.src="../images/hole.png";
+        backImg.src="../images/warehouse.jpg"; 
+        bloodImg.src="../images/blood2.png"; 
+        rabbitImg1.src="../images/rabbit_1.png";
+        rabbitImg2.src="../images/rabbit2.png";
         
 
         //총과 구멍의 좌표
@@ -32,9 +43,18 @@
         let snipeY=0;
         let holeX=0;
         let holeY=0;
+        let bloodX=0;
+        let bloodY=0;
+        let rabbitX=400;
+        let rabbitY=250;
 
+        //총알 보관
         let bullets=[];
+        let rabbitImgs=[rabbitImg1,rabbitImg2];
         
+        let fireSound=new Audio("../sounds/fire.wav");
+        let birddieSound=new Audio("../sounds/birddie.mp3");
+
 
         //해당 객체의 좌표 보관
         let shootPointxy=[];
@@ -47,14 +67,19 @@
 
         //초당 100번 호출되는 함수를 만들어 놓고 
         setInterval(function(){
+            if(rabbitIdx==1) rabbitIdx=0;
+            else rabbitIdx=1;
             //사각형 영역을 지우기
-            context.clearRect(0, 0, 500, 500);
+            //context.clearRect(0, 0, 800, 500);
             //함수 안에서 canvas 에 렌더링하는 작업을 한다. 
+            context.drawImage(backImg, 0, 0, 800, 500); 
             for(let i=0;i<bullets.length;i++)
             {
                  context.drawImage(holeImg, bullets[i].x-10, bullets[i].y-10, 20, 20); 
             }
             context.drawImage(snipeImg, snipeX-50, snipeY-50, 100, 100);
+            context.drawImage(bloodImg, bloodX-50, bloodY-50, 100, 100);
+            context.drawImage(rabbitImgs[rabbitIdx], rabbitX-50, rabbitY-50, 100, 100);
         }, 100);
 
         canvas.addEventListener("mousemove", function(e){
@@ -64,7 +89,7 @@
         });
 
         //canvas 에 "mousedown" 이벤트가 일어 났을 때 총소리를 재생해 보세요.
-        let fireSound=new Audio("../sounds/fire.wav");
+        
         canvas.addEventListener("mousedown", function(e){
             //reset audio
             fireSound.currentTime=0;
@@ -73,8 +98,21 @@
             //구멍의 값을 추출
             holeX=e.offsetX;
             holeY=e.offsetY;
+
             let hole = {x:holeX, y:holeY};
             bullets.push(hole);
+
+            if(holeX >= rabbitX-50 && holeX <= rabbitX+50 && holeY >= rabbitY-50 && holeY <= rabbitY+50)
+            {
+                rabbitX=Math.floor(Math.random()*800);
+                rabbitY=Math.floor(Math.random()*400);
+                bloodX = holeX;
+                bloodY = holeY;
+                birddieSound.currentTime=0;
+                birddieSound.play();
+                //setTimeout()
+            }
+
         });
 
       
