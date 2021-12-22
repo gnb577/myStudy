@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Step09_example4.html</title>
+    <style>
+        /* 내부 css */
+
+        /* 어떤 요소에 css를 적용할지 선택자가 필요하다. */
+        #kim{
+            width: 100px;
+        }
+    </style>
+</head>
+<body>
+    <h1>이미지 우측으로 움직이기</h1>
+    <button id="moveBtn">움직이기</button>
+    <br>
+    <br>
+    <!-- 
+        style 속성을 이용해서 작성한 css는 인라인 css라고 한다.
+    -->
+    <img src="images/images/kim1.png" id="kim">
+    <script>
+        /*
+            움직이기 버튼을 누를때마다 이미지가 우측으로 100px씩 움직이도록
+            프로그래밍 해보세요.
+
+            -hint
+            .style.marginLeft= 변수+"px";
+        */
+        //페이지 로딩 시점에 변수를 만들고 초기값 대입
+        let goRight=0;
+        document.querySelector("#moveBtn").addEventListener("click", function(){
+            //goRight를 100 증가시키기
+            goRight+=100;
+            document.querySelector("#kim").style.marginLeft = goRight+"px";
+        });
+    </script>
+</body>
+</html>

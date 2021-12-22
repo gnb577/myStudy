@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Step09_example5.html</title>
+    <style>
+        #msgList li:hover{  /*자손 요소중 li에 마우스가 hover되었을때*/
+            background-color: yellow;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>ul 요소도 같이 사용해 보기</h1>
+    <input type="text" id="inputMsg">
+    <button id="addBtn">추가</button>
+    <ul id="msgList">
+        <li>하나</li>
+        <li>두울</li>
+        <li>세엣</li>
+    </ul>
+    <script>
+
+
+              /*
+        document.querySelectorAll("#msgList li").forEach(function(value,index){
+            value.addEventListener("click",function(){
+                console.log(`${index}번째 li is clicked`);
+                console.log(this);
+
+                let isDelete=confirm("삭제를 원하시면 누르세요");
+                if(isDelete){
+                    this.remove();
+                }
+            });
+        });
+        */
+        let chk_val = function(value,index){
+            value.addEventListener("click",function(){
+                console.log(`${index}번째 li is clicked`);
+                console.log(this);
+
+                let isDelete=confirm("삭제를 원하시면 누르세요");
+                if(isDelete){
+                    this.remove();
+                }
+            });
+        };
+        document.querySelectorAll("#msgList li").forEach(chk_val);
+       
+  
+
+        function send(){
+            let msg=document.querySelector("#inputMsg").value;
+            //2. li 요소 만들기
+            let li=document.createElement("li");
+            //3. li 요소에 innerText 출력하기
+            li.innerText=msg;
+            //4. ul 에 li 요소를 append 하기
+            document.querySelector("#msgList").append(li);
+            document.querySelector("#inputMsg").value ="";
+            
+            li.addEventListener("click",function(){
+                console.log(this);
+                let isDelete=confirm("삭제를 원하시면 누르세요");
+                if(isDelete){
+                    this.remove();
+                }
+            });
+            
+            //li.addEventListener("click",chk_val); //불가능
+        }
+        
+        let addLi= function(){
+            let ul = document.getElementById("ul#msgList");
+            let new_li=document.createElement("li");
+            let input_val = document.querySelector("input#inputMsg").value;
+            new_li.innerText=input_val;
+            document.querySelector("ul#msgList").append(new_li);
+            
+            //new_li.innerText = input_val;
+           // new_li.innerText = "하이";
+        };
+
+        document.querySelector("button#addBtn").addEventListener("click",addLi);
+        document.querySelector("#inputMsg").addEventListener("keyup", function(e){
+            console.log(e);
+            //만일 엔터키를 눌렀다면
+            if(e.keyCode == 13){
+                //1. 입력한 문자열 읽어오기
+               send();
+            }
+        });
+
+       
+
+       
+        
+    </script>
+
+</body>
+</html>

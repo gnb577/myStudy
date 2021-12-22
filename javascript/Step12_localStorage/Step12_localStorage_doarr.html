@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Step12_localStorage.html</title>
+</head>
+<body>
+    <input type="text" id="inputFortune" placeholder="오늘의 운세 입력...">
+    <button id="saveBtn">localStorage에 저장하기</button>
+    <button id="showBtn">저장된 운세 불러오기</button>
+    <button id="deleteBtn">운세 삭제하기</button>
+    <p id="one"></p>
+    <script>
+
+        let init = function(){
+            delete localStorage.localArray;
+        }
+
+        //localstorage2를 참고하여 만들어보자!
+        let arr = function(){
+            
+            tmp = ["남자","여자","아이","어른"];
+            tmp = ["하나","두울","세엣","네엣"];
+            localStorage.localArray[0]=tmp;
+            localStorage.localArray[0]=tmp;
+         
+
+            /*
+            tmp.forEach(function(item){
+                temp = JSON.parse();
+                localStorage.localArray.push(temp);
+            })
+            */    
+            
+            //localObj.localArray.push(arrayObj);
+           // localStorage.localObj = JSON.stringify(localObj);
+            //localObj = JSON.parse(localStorage.localObj);
+            //arrayObj = {"Two":"123"};
+           
+        }
+
+
+        /*
+            localObj = {}
+            localObj.localArray = []
+            localObj.localArray.push(arrayObj)
+
+            localStorage.localObj = JSON.stringify(localObj);
+            ...
+            localObj = JSON.parse(localStorage.localObj);
+        */
+
+        document.querySelector("#saveBtn").addEventListener("click",save);
+        document.querySelector("#showBtn").addEventListener("click",show);
+        document.querySelector("#deleteBtn").addEventListener("click",doDelete);
+    </script>
+</body>
+</html>

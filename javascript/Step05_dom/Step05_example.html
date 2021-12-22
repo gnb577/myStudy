@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Step05_example.html</title>
+</head>
+<body>
+    <input type="text" placeholder="문자열 입력..." id="inputMsg">
+    <button id="sendBtn" onclick="add()">전송</button>
+    <div id="msgList">
+        <p>하나</p>
+        <p>두울</p>
+    </div>
+    <script>
+        /*
+            전송 버튼을 눌렀을 때 input 요소에 입력한 value 값을 읽어와서
+            p 요소를 만든 다음 p 요소의 innerText 출력하고
+            그 p요소를 div의 자식 요소로 추가 해 보세요.
+        */
+        let add=function(){
+            let p1=document.createElement("p");
+            p1.innerText=document.querySelector("input").value;
+            document.querySelector("#msgList").append(p1);
+            /*  강사님 version
+                let msg=document.querySelector("#inputMsg").value;
+                let p1=document.createElement("p");
+                p1.innerText=msg;
+                document.querySelector("#msgList").append(p1);
+            */
+        };
+    </script>
+</body>
+</html>

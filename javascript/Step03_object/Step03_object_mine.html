@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Step03_object.html</title>
+</head>
+<body>
+    <!-- onclick같은 속성 형식은 설사 함수가 들어가더라도 " "로 묶는다 -->
+    <button onclick="mem1.name='강정호', mem1.num=10">수정하기</button> <!--button으로 object 수정하기-->
+    <script>
+        let mem1={num:1, name:"김구라", addr: "노량진"};
+        let a=mem1; // object data를 a에 대입(복사)
+        let b=mem1.num; //number
+        let c=mem1.name; //string
+        let d=mem1.addr; //string
+
+        //object에 저장된 값 수정하기
+        mem1.num=999;
+        mem1.name="이정호";
+        mem1.addr="서울어딘가";
+
+        //다른 분들은 함수로 짜심
+        /*
+        let change=function(){
+            mem1.name='강정호';
+            mem1.num=10;
+        }
+        */
+    </script>
+</body>
+</html>

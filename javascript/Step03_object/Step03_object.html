@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Step03_object.html</title>
+</head>
+<body>
+    <button onclick="clicked()">수정하기1</button>
+    <button onclick="f1()">수정하기2</button>
+    <script>
+        let mem1={num:1, name:"김구라", addr:"노량진"};
+        //mem1 변수 안에 들어있는 object type data를 a 라는 변수에 대입(복사해주기)
+        let a=mem1;
+        //b는 number type
+        let b=mem1.num;
+        //c는 string type
+        let c=mem1.name;
+        //d는 string type
+        let d=mem1.addr;
+
+        
+        //위의 버튼을 눌렀을 때 아래의 두줄이 실행되도록 해보세요.
+        //수정하기1
+        function clicked(){
+            //특정 key 값으로 저장된 값을 수정하기
+            mem1.num=999;
+            mem1.name="김호직";
+            //만일 존재하지 않는 key값이면 추가된다.
+            mem1.isMan=true;
+        }
+
+        //특정 key 값을 삭제하기
+        delete mem1.addr;
+
+        //빈 object를 만들고
+        let mem2={};
+        //나중에 key 값을 하나씩 추가 할 수 있다.
+        mem2.num=2;
+        mem2.name="해골";
+        mem2.addr="행신동"
+        
+        //수정하기2
+        let f1=function(){
+            mem1.num=100;
+            mem1.name="rlaghwlr";
+        };
+        
+
+    </script>
+</body>
+</html>
