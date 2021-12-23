@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Step16_canvas3_functionalize4.html</title>
+    <style>
+        canvas{
+            border: 1px dotted gray;
+        }
+    </style>
+</head>
+<body>
+    <h1>canvas 요소 사용해 보기</h1>
+    <canvas id="myCanvas" width="800" height="500"></canvas>
+    <button id="stopBtn">게임종료</button>
+    <button id="modeBtn">게임모드</button>
+    <script>
+        //canvas 요소의 참조값
+        let canvas=document.querySelector("#myCanvas");
+        //canvas 에 그림을 그릴수 있는 도구의 참조값 얻어오기 
+        let context=canvas.getContext("2d");
+        context.font='italic 18px Calibri'; 
+        //canvas 에 그릴 이미지 로딩하기
+        let snipeImg=new Image();
+        let holeImg=new Image();
+        let backImg=new Image();
+        let bloodImg=new Image();
+        let rabbitImg1=new Image();
+        let rabbitImg2=new Image();
+        let rabbitDeadImg0=new Image();
+        let rabbitDeadImg1=new Image();
+        let rabbitDeadImg2=new Image();
+        let rabbitDeadImg3=new Image();
+        let manImg=new Image();
+        
+        
+
+        snipeImg.src="../images/snipe.png"; //이미지를 로딩할때 .src를 사용해서 집어넣어야 함을 유의하자!
+        holeImg.src="../images/hole.png";
+        backImg.src="../images/warehouse.jpg"; 
+        bloodImg.src="../images/blood2.png"; 
+        rabbitImg1.src="../images/rabbit_1.png";
+        rabbitImg2.src="../images/rabbit2.png";
+        rabbitDeadImg0.src="../images/r0.png";
+        rabbitDeadImg1.src="../images/r1.png";
+        rabbitDeadImg2.src="../images/r2.png";
+        rabbitDeadImg3.src="../images/r3.png";
+        manImg.src="../images/man_character.png";
+        
+
+        //총과 구멍의 좌표
+        let snipe={x:1000,y:1000};
+        let hole={x:1000,y:1000};
+        let blood={x:1000,y:1000};
+        let rabbit={x:400,y:250,idx:0,delay:0};
+        //let rabbitDead={x:1000,y:1000};
+        let man={x:400,y:250,idx:0,delay:0};
+        let rabbitDeadflag=false;
+        let isShooted=false;
+        let ranDelay=0;
+        let killScore=0;
+        let clock_speed=100;
+
+        //총알 보관
+        let bullets=[];
+        let rabbitImgs=[rabbitImg1,rabbitImg2];
+        let rabbitDeadImgs=[rabbitDeadImg0,rabbitDeadImg1,rabbitDeadImg2,rabbitDeadImg3];
+        
+        let fireSound=new Audio("../sounds/fire.wav");
+        let birddieSound=new Audio("../sounds/birddie.mp3");
+
+        
+        function objMotionChange(obj,num){
+            obj.delay++;
+            if(obj.delay%num==0){
+                if(obj.idx==1) obj.idx=0;
+            else obj.idx=1;
+            }
+            
+        }
+
+        function myTimer(count,num){
+            ranDelay++;
+            if(count%num==0){
+                isShooted=false;
+                rabbitDeadflag=false;
+                return true;
+            }
+            else false;
+        }
+
+        function objLocationRandomChange(obj){
+            obj.x=Math.floor(Math.random()*800);
+            obj.y=Math.floor(Math.random()*400);
+        }
+
+        function objLocationChange(obj,x,y){
+            obj.x=x;
+            obj.y=y;
+        }
+
+        function musicPlay(sound){
+            sound.currentTime=0;
+            sound.play();
+        }
+
+
+        //미구현
+        function ishitted(ob,x,y){
+            if(x >= ob.x-50 && x <= ob.x+50 && y >= ob.y-50 && y <= ob.y+50)
+            {
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+
+        function gameStop(){
+            alert("게임이 종료되었습니다!");
+            clearInterval(gameInterval1);
+        }
+
+        /*
+        구현 불가 --> 이미 결정된 intervalTime 변경안된다.
+
+        function changeSpeed(){
+            console.log(`속도가 ${clock_speed}인 게임모드가 변경되었습니다`);
+            if(clock_speed==100)clock_speed=10;
+            else if(clock_speed=10)clock_speed=100;
+        }
+
+        */
+
+        //초당 10번 호출되는 함수를 만들어 놓고 
+        let gameInterval1=setInterval(function(){
+
+            //사각형 영역을 지우기
+            //context.clearRect(0, 0, 800, 500);
+            //함수 안에서 canvas 에 렌더링하는 작업을 한다.
+
+            objMotionChange(rabbit,2);
+            if(myTimer(ranDelay,20)) 
+            {
+                objLocationRandomChange(rabbit);
+                objLocationRandomChange(man);
+            }
+          
+            context.drawImage(backImg, 0, 0, 800, 500); 
+            /*
+            for(let i=0;i<bullets.length;i++)
+            {
+                 context.drawImage(holeImg, bullets[i].x-10, bullets[i].y-10, 20, 20); 
+            }
+            */
+            context.drawImage(snipeImg, snipe.x-50, snipe.y-50, 100, 100);
+            context.drawImage(bloodImg, blood.x-25, blood.y-50, 100, 100);
+            context.drawImage(manImg, man.x-50, man.y-50, 100, 120);
+            if(rabbitDeadflag==true)
+            {
+                context.drawImage(rabbitDeadImgs[0], rabbit.x-50, rabbit.y-100, 100, 120);
+                context.drawImage(rabbitDeadImgs[1], rabbit.x-50, rabbit.y-75, 100, 120);
+                context.drawImage(rabbitDeadImgs[2], rabbit.x-50, rabbit.y-50, 100, 120);
+                context.drawImage(rabbitDeadImgs[3], rabbit.x-50, rabbit.y-25, 100, 120);
+            }
+            else context.drawImage(rabbitImgs[rabbit.idx], rabbit.x-50, rabbit.y-50, 100, 100);
+             
+            for(let i=0;i<bullets.length;i++)
+            {
+                 context.drawImage(holeImg, bullets[i].x-10, bullets[i].y-10, 20, 20); 
+            }
+            
+
+            context.fillText(`Kill : ${killScore}`,730,450);
+        }, clock_speed);
+
+        canvas.addEventListener("mousemove", function(e){
+            //마우스의 좌표를 스나이프의 좌표에 반영한다. 
+            snipe.x=e.offsetX;
+            snipe.y=e.offsetY;
+        });
+
+        //canvas 에 "mousedown" 이벤트가 일어 났을 때 총소리를 재생해 보세요. 
+        canvas.addEventListener("mousedown", function(e){
+         
+           musicPlay(fireSound);
+           
+            //구멍의 값을 추출
+            hole.x=e.offsetX;
+            hole.y=e.offsetY;
+            let temphole=hole;
+            /*
+            총알을 누적해서 남기고 싶은 경우는 mousedown시에 객체를 생성해서 집어넣어야 한다.
+            배열도 결국 얕은 복사여서 변수는 그대로 저장이 되는 데, 객체는 모든 객체에 영향을 줘버린다.
+            hole.x,hole.y가 변하면 bullets안의 값도 모두 마지막 값으로 변환된다.
+
+            let temphole={};
+            temphole = {x:hole.x,y:hole.y};
+            */
+            bullets.push(temphole);
+            
+            let checkMan = ishitted(man,hole.x,hole.y);
+            let checkRabbit = ishitted(rabbit,hole.x,hole.y);
+            if(checkMan==true)
+            {
+                //objLocationRandomChange(man);
+                objLocationChange(blood,hole.x,hole.y);
+                musicPlay(birddieSound);
+                killScore++;
+            }
+            if(!isShooted){
+                if(checkRabbit==true)
+                {
+                    //objLocationRandomChange(rabbit);
+                    //objLocationChange(rabbitDead,hole.x,hole.y);
+                    
+                    isShooted=true;
+                    rabbitDeadflag=true;
+                    objLocationChange(blood,hole.x,hole.y);
+                    musicPlay(birddieSound);
+                    killScore++;
+                }
+            }
+        });
+
+        document.querySelector("#stopBtn").addEventListener("click",gameStop);
+        //document.querySelector("#modeBtn").addEventListener("click",changeSpeed);
+      
+        
+            
+            
+        
+    </script>
+</body>
+</html>
