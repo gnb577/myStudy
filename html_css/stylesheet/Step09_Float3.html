@@ -18,7 +18,11 @@
 			border: 1px solid blue;
 			background-color: #999;
 			/* float 된 자식 요소를 감쌀수 있도록 설정 */
-			overflow: auto;
+			/* 
+				Class wrapper안의 요소 box들이 float로 공중에 떠버려 Content요소를 잡지 못해 border가 이상하게 잡힌다.
+				overflow: auto요소를 사용해야 float를 잡아 Border가 생길 수 있다.
+			*/
+			overflow: auto; 
 		}
 	</style>
 </head>

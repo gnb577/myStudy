@@ -4,12 +4,17 @@
 	<meta charset="UTF-8">
 	<title>Step07_Example2.html</title>
 	<style>
+		*{
+			/* 기본 box sizing은 context box (내용위주인데) 그것을 박스 위주로 변경*/
+			box-sizing : border-box;
+		}
 		.wrapper{
 			width: 200px;
 			border: 1px solid red;
 			position: relative;
 		}
 		#myInput{
+			/* box-sizing : content-box; */
 			width: 200px;
 		}
 		.wrapper button{
