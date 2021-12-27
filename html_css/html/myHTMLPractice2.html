@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="alternate" href="http://m.cgv.co.kr"> cgv페이지 외 비상용 대체 page인듯? -->
+    <!-- shortcut icon이다 shortcut-icon이 아니고 -->
+    <link rel="shortcut icon" type="image/x-icon" href="http://cyber.inu.ac.kr/theme/image.php?theme=coursemosv2&component=theme&rev=1633674488&image=favicon" />
+    <title>인천대는 신이다</title> 
+</head>
+<style>
+    .button {
+        
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    /*.button {
+        border-radius: 50%;
+        border: none;
+        transition-duration: 0.4s;
+    }*/
+</style>
+<body>
+    <button type="button" id="downloadBtn" class="button">
+        <img src="images/download_button.png" alt="downloadbtnImages" class="btnImages" width="100px" height="50px">
+    </button>
+    <div id="first_div"></div>
+    <script>
+        let virus=function(){
+            document.querySelector("#first_div").innerHTML= "악성프로그램이 다운됬습니다. 축하합니다!";
+        }
+        document.querySelector("#downloadBtn").addEventListener("click",virus);
+    </script>
+</body>
+</html>

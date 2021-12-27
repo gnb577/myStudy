@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>myHTMLPractice1.html</title> 
+</head>
+<style>
+    
+</style>
+<body>
+    <!-- class id name의 속성에 대해 자세히 알아보자! -->
+    <h1>테이블 구현해보자</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th id="chk_list" name="name">이름</th>
+                <th id="chk_list" name="age">나이</th>
+                <th id="chk_list" name="sex">성별</th>
+                <th id="chk_list" name="name">이름2</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th>최고령자</th>
+                <td id="max_age">0</td>
+                <td id="max_sex">x</td>
+            </tr>
+        </tfoot>
+        <tbody>
+            <tr id="kim">
+                <td id="name">김김김</td>
+                <td id="age">10</td>
+                <td id="sex">남</td>
+                
+                
+            </tr>
+            <tr id="Park">
+                <td id="name">박박박</td>
+                <td id="age">20</td>
+                <td id="sex">여</td>
+            </tr>
+            <tr id="Lee">
+                <td id="name">이이이</td>
+                <td id="age">40</td> 
+                <td id="sex">여</td>
+            </tr>    
+            <tr id="Choi">
+                <td id="name">최최최</td>
+                <td id="age">30</td> 
+                <td id="sex">남</td>
+            </tr>    
+        </tbody>
+    </table>
+    <script>
+       let ages=[];
+       let ages_idxs=[];
+       document.querySelectorAll("tr td#age").forEach(function(item,index){
+           let a = {val:parseInt(item.innerText),index:index};
+           let b = parseInt(item.innerText);
+           ages_idxs.push(a);
+           ages.push(b); 
+       })
+
+       let max_age=Math.max(...(ages));
+       document.querySelector("tfoot td#max_age").innerText = max_age;
+       
+       let tmp_idx=0;
+       while(1)
+       {
+            if(ages_idxs[tmp_idx].val==max_age)
+            {
+                break;
+            }
+            tmp_idx++;
+       }
+       document.querySelector("tfoot td#max_sex").innerText = document.querySelectorAll("tr td#sex")[tmp_idx].innerText;
+       document.querySelectorAll('thead tr th[name="name"]').forEach(function(item){
+           console.log(item);
+       })
+    </script>
+    
+</body>
+</html>
